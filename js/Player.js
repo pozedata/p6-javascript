@@ -32,14 +32,14 @@ class Player {
             this.playerMoveOnWeapon(e, weapons);
             this.playerOrientation(e);
             this.calculMoveRestPlayer(e);
-            this.verifOtherPlayerAround(nextPlayer);
+            const test = this.verifOtherPlayerAround(nextPlayer);
             $('.move').off('click');
             $('.move').removeAttr('data-move').removeClass('move');
             if (this.moveRest !== 0) {
                 board.generateCaseForMove(this);
                 this.playerMove(array, weapons, board, nextPlayer);
             }
-            else {
+            else if (!test && this.moveRest === 0){
                 $(window).trigger('endTurn', [this]);
             }
         });
@@ -125,7 +125,11 @@ class Player {
             $(window).trigger('attackMode', [this]);
             this.moveRest = 0;
             this.move = 0;
-            nextPlayer.move = 0; // <== chnger son emplacement
+            nextPlayer.move = 0;
+            return true;
+        }
+        else {
+            return false;
         }
     };
 

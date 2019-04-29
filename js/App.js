@@ -25,9 +25,7 @@ class App {
         this.attackMode = false;
 
         $(window).on('endTurn', () => {this.endTurn()});
-        $(window).on('attackMode', () => {this.attackMode = true});
-
-        // test
+        $(window).on('attackMode', () => {this.attackMode = true; this.play()});
 
     };
     generateMap(){
@@ -49,14 +47,12 @@ class App {
             this.nextPlayer = this.player1;
         }
         // this.currentPlayer.activeDefense = false;
-        
+        this.currentPlayer.btnEndTurn();
         if (this.attackMode === false) {
-            this.currentPlayer.btnEndTurn();
             this.board.generateCaseForMove(this.currentPlayer);
             this.currentPlayer.playerMove(this.board.caseGrid, this.weapons, this.board, this.nextPlayer);
         }
         else {
-            this.currentPlayer.btnEndTurn();
             this.currentPlayer.playerAttack(this.weapons, this.nextPlayer);
             console.log(this.currentPlayer);
         }
