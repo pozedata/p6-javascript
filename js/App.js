@@ -27,6 +27,8 @@ class App {
         $(window).on('endTurn', () => {this.endTurn()});
         $(window).on('attackMode', () => {this.attackMode = true});
 
+        // test
+
     };
     generateMap(){
         this.board.createMap();
