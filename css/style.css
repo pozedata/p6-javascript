@@ -1,0 +1,241 @@
+/* ====================================== HTML ====================================== */
+body {
+    margin: 0px;
+    padding: 0px;
+    background: url("../img/background.png") no-repeat center fixed;
+    background-size: cover; 
+
+}
+
+p {
+    font-family: cursive;
+}
+
+#conteneur {
+    margin-top: 0.5%;
+    display: flex;
+    justify-content: space-around;
+}
+
+.element1, .element2 {
+    width: 20%;
+    background-color: white;
+    background-image: url("../img/test.svg");
+    background-size: cover;
+    border-radius: 20px; 
+    box-shadow: inset 8px 8px 2px 1px rgba(255, 255, 255, 0.4);
+}
+
+.part1, .part2, .part3, .part4 {
+    height: 120px;
+    background-color: white;
+    border-radius:20px; 
+    margin : 13.5px;
+    box-shadow:  5px 5px 2px 1px rgba(0, 0, 0, 0.3);
+}
+
+.part3, .part4 {
+    padding: 10px;
+}
+
+.part2 {
+    display : flex;
+    justify-content: space-between;
+}
+
+.element2 .part1 img { 
+    height: 120px;
+    float: right;
+}
+
+.element1 .part1 img {
+    height: 120px;
+    float: left;
+}
+
+.imgArme img {
+    height: 120px;
+}
+
+.part4 {
+    display: flex;
+    justify-content: space-around;
+}
+
+.part4 button {
+    border-radius: 50%;
+    height:85px ;
+    width:85px ;
+    margin:auto ;  
+    box-shadow: inset 2px 2px 3px rgba(255, 255, 255, .6),
+                inset -2px -2px 3px rgba(0, 0, 0, .6);
+    border: none;
+    font-family: cursive;
+}
+
+.part4 button:active {
+    box-shadow: inset -2px -2px 3px rgba(255, 255, 255, .6),
+                inset 2px 2px 3px rgba(0, 0, 0, .6);
+}
+
+.btnAtt {
+    background-color: lightgreen;
+}
+
+.btnAtt:hover {
+    background-color: rgba(50, 250, 50, 0.7);
+}
+.btnDef {
+    background-color: lightblue;
+}
+.btnDef:hover {
+    background-color: skyblue;
+}
+
+.btnFin {
+    background-color: lightcoral;
+}
+.btnFin:hover {
+    background-color: coral;
+}
+
+.btnFin:disabled,.btnAtt:disabled,.btnDef:disabled {
+    background-color: lightgray;
+}
+
+ul {
+    font-family: cursive;
+    font-size: 85%;
+}
+
+/* ====================================== MODAL ====================================== */
+
+#info {
+    height: 30px;
+    width: 30px;
+    background-color: lightblue;
+}
+
+#close {
+    width: 100%;
+    height: 40px;
+    background-color: lightblue;
+    border-radius: 10px;
+}
+
+.modal {
+    position: fixed;
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+    top: 0px;
+    left: 0px;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, .8);
+}
+
+.modal-wrapper {
+    overflow: auto;
+    width: 600px;
+    max-width: calc(100vw - 20px);
+    max-height: calc(100vh - 20px);
+    padding: 10px;
+    background-color: white;
+}
+
+.arme{
+    width: 15%;
+}
+
+#conteneurArme1 {
+    display: flex;
+    justify-content: center;
+}
+
+.info1 {
+    width: 100%;
+    height: auto;
+    border-radius: 10px;
+}
+
+#box-modal {
+    margin: 5%;
+}
+
+/* ====================================== JAVASCRIPT ====================================== */
+
+#jeu {
+    background-image: url("../img/sol.jpg");
+    display: inline-block;
+    border: 5px solid greenyellow;
+
+}
+
+.row {
+    height: 60px;
+}
+
+.case {
+    width: 60px;
+    height: 60px;
+    display: inline-block;
+    border: 1px solid greenyellow;
+}
+
+div, img {
+    background-size: contain;
+}
+
+.part1 p {
+    padding: 10%;
+    font-family: cursive;
+}
+
+.move {
+    box-shadow:  inset -0.5px -1px 2px 1px rgba(0, 0, 0, 0.4);
+    background-color: rgba(50, 250, 50, 0.4);
+}
+
+.move:hover {
+    background-color: rgba(50, 250, 50, 0.8); 
+}
+
+.move:active {
+    box-shadow: inset 0.5px 1px 1px 1px rgba(0, 0, 0, 0.4);
+    
+}
+
+.wall {
+    background-image: url("../img/buisson.png");
+}
+
+/* .player1 {
+    background-image: url("../img/player1-pistolet.svg");
+}
+
+.player2 {
+    background-image: url("../img/player2-pistolet.svg");
+} */
+
+[data-weapon="pistolet"] {
+    background-image: url("../img/pistolet.svg");
+}
+
+[data-weapon="laser"] {
+    background-image: url("../img/laser.svg");
+}
+
+[data-weapon="pompe"] {
+    background-image: url("../img/pompe.svg");
+}
+
+[data-weapon="grenade"] {
+    background-image: url("../img/grenade.svg");
+}
+
+[data-weapon="assaut"] {
+    background-image: url("../img/assaut.svg");
+}
+
+
