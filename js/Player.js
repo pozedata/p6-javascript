@@ -18,7 +18,7 @@ class Player {
     };
 
     description() {
-        this.elementDesc.helth.text(this.sante);
+        this.elementDesc.helth.text(this.sante).css('color', 'green');
         this.elementDesc.damage.text(this.weapon.damage);
         this.elementDesc.weapon.text(this.weapon.name);
     }
@@ -68,6 +68,7 @@ class Player {
     weaponOnInterface() {
             this.elementWeapon.attr('src', '../img/'+ this.weapon.type +'.svg');
             this.elementDesc.damage.text(this.weapon.damage);
+            this.elementDesc.weapon.text(this.weapon.name);
 
     }
 
@@ -137,25 +138,39 @@ class Player {
 
     // si on alterne attaque et def, le tour ne se termine pas 
 
-    playerAttack(weapons, nextPlayer){
-        this.btnAttack(weapons, nextPlayer);
+    playerAttack(nextPlayer){
+        this.btnAttack(nextPlayer);
         this.btnDefense();
     };
 
-    btnAttack(weapons, nextPlayer){
+    btnAttack(nextPlayer){
         this.elementBtn.btnAtt.removeAttr('disabled');
         this.elementBtn.btnAtt.on('click', () => {
-            let weaponOnPlayer = weapons.find(elt => (elt.type === this.weapon.type));
             if (nextPlayer.activeDefense === true){
                 weaponOnPlayer.damage = weaponOnPlayer.damage / 2;
             }
-            this.elementP.text("Vous décidez d'attaquer l'autre joueur avec le "+ weaponOnPlayer.name +" ! vous lui infliger "+ weaponOnPlayer.damage +" dégats.");
-            nextPlayer.elementDesc.helth.text(nextPlayer.sante = nextPlayer.sante - this.weapon.damage);
-            console.log(nextPlayer.sante);
+            this.interfaceOnAttack(nextPlayer);
             this.elementBtn.btnAtt.off('click');
             $(window).trigger('endTurn', [this]);
         });
     };
+
+    interfaceOnAttack(nextPlayer) {
+        this.elementP.text("Vous décidez d'attaquer l'autre joueur avec le "+ this.weapon.name +" ! vous lui infliger "+ this.weapon.damage +" dégats.");
+        nextPlayer.elementDesc.helth.text(nextPlayer.sante = nextPlayer.sante - this.weapon.damage);
+        if(nextPlayer.sante < 0) {
+            nextPlayer.elementDesc.helth.text(nextPlayer.sante = 0);
+        }
+        if(nextPlayer.sante >= 60){
+            nextPlayer.elementDesc.helth.css('color', 'green');
+        }
+        else if (nextPlayer.sante >= 30){
+            nextPlayer.elementDesc.helth.css('color', 'orange');
+        }
+        else{
+            nextPlayer.elementDesc.helth.css('color', 'red');
+        }
+    }
 
     // PB : arrive pas a placer l'activeDefence au bon endroit pour qu'il se desactive pour les tour d'apres, ici present dans la app
     btnDefense() {
@@ -163,8 +178,8 @@ class Player {
         this.elementBtn.btnDef.on('click', () => {
             this.activeDefense = true; ////////////////
             this.elementP.text("Vous décidez de vous défendre! vous subirez que 50% des dégats.");
-            this.elementBtn.btnDef.off('click');
             $(window).trigger('endTurn', [this]);
+            this.elementBtn.btnDef.off('click');
         });
     }
 

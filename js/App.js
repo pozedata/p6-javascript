@@ -58,7 +58,7 @@ class App {
             this.currentPlayer.playerMove(this.board.caseGrid, this.weapons, this.board, this.nextPlayer);
         }
         else {
-            this.currentPlayer.playerAttack(this.weapons, this.nextPlayer);
+            this.currentPlayer.playerAttack(this.nextPlayer);
             console.log(this.currentPlayer);
         }
     };
