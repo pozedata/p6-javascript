@@ -29,6 +29,7 @@ class App {
 
         $(window).on('endTurn', () => {this.endTurn()});
         $(window).on('attackMode', () => {this.attackMode = true; this.play()});
+        $(window).on('endGame', () => {this.endGame()});
 
     };
     generateMap(){
@@ -37,8 +38,8 @@ class App {
         this.board.generatePositionPlayer(this.player1, this.player2);
         this.board.generatePlayer([this.player1, this.player2]);
         this.board.generateWeapon([this.laser, this.pompe, this.grenade, this.assaut]);
-        this.players.forEach((element)=> {
-            element.description(this.weapons);
+        this.players.forEach((player)=> {
+            player.description(this.weapons);
           });
     };
 
@@ -59,7 +60,6 @@ class App {
         }
         else {
             this.currentPlayer.playerAttack(this.nextPlayer);
-            console.log(this.currentPlayer);
         }
     };
 
@@ -69,7 +69,20 @@ class App {
         this.currentPlayer.elementBtn.btnDef.attr('disabled', true);
         this.currentPlayer.elementBtn.btnFin.attr('disabled', true);
         this.currentPlayer.elementBtn.btnAtt.attr('disabled', true);
-        console.log('changement joueur');
+        // console.log('changement joueur');
         this.play();
+    }
+
+    endGame() {
+        let playerLose = this.players.find(elt => (elt.sante === 0));
+        let playerWin = this.players.find(elt => (elt.sante !== 0));
+        playerLose.elementP.text("Vous avez perdu :'( ");
+        playerWin.elementP.text("Vous avez gagner :D !!!!");
+        this.players.forEach((player)=> {
+            player.elementBtn.btnDef.attr('disabled', true);
+            player.elementBtn.btnFin.attr('disabled', true);
+            player.elementBtn.btnAtt.attr('disabled', true);
+        });
+        // comment stopé le jeu ? 
     }
 };

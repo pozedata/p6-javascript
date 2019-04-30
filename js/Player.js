@@ -139,6 +139,10 @@ class Player {
     // si on alterne attaque et def, le tour ne se termine pas 
 
     playerAttack(nextPlayer){
+        // let test = interfaceOnAttack(nextPlayer)
+        // if (!test) {
+            
+        // }
         this.btnAttack(nextPlayer);
         this.btnDefense();
     };
@@ -158,21 +162,27 @@ class Player {
     interfaceOnAttack(nextPlayer) {
         this.elementP.text("Vous décidez d'attaquer l'autre joueur avec le "+ this.weapon.name +" ! vous lui infliger "+ this.weapon.damage +" dégats.");
         nextPlayer.elementDesc.helth.text(nextPlayer.sante = nextPlayer.sante - this.weapon.damage);
-        if(nextPlayer.sante < 0) {
-            nextPlayer.elementDesc.helth.text(nextPlayer.sante = 0);
-        }
         if(nextPlayer.sante >= 60){
             nextPlayer.elementDesc.helth.css('color', 'green');
         }
-        else if (nextPlayer.sante >= 30){
+        else if (nextPlayer.sante >= 30) {
             nextPlayer.elementDesc.helth.css('color', 'orange');
         }
         else{
             nextPlayer.elementDesc.helth.css('color', 'red');
         }
+
+        if(nextPlayer.sante <= 0) {
+            nextPlayer.elementDesc.helth.text(nextPlayer.sante = 0);
+            $(window).trigger('endGame', [this]);
+            // return true
+        }
+        // else {
+        //     return false
+        // }
     }
 
-    // PB : arrive pas a placer l'activeDefence au bon endroit pour qu'il se desactive pour les tour d'apres, ici present dans la app
+    // PB : arrive pas a placer l'activeDefence au bon endroit pour qu'il se desactive pour les tour d'apres, ici present dans la app et bloque les autre btn si on l'uitilise ... 
     btnDefense() {
         this.elementBtn.btnDef.removeAttr('disabled');
         this.elementBtn.btnDef.on('click', () => {
