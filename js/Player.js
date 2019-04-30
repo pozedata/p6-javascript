@@ -32,14 +32,14 @@ class Player {
             this.playerMoveOnWeapon(e, weapons);
             this.playerOrientation(e);
             this.calculMoveRestPlayer(e);
-            const test = this.verifOtherPlayerAround(nextPlayer);
+            const returnPlayer = this.verifOtherPlayerAround(nextPlayer);
             $('.move').off('click');
             $('.move').removeAttr('data-move').removeClass('move');
             if (this.moveRest !== 0) {
                 board.generateCaseForMove(this);
                 this.playerMove(array, weapons, board, nextPlayer);
             }
-            else if (!test && this.moveRest === 0){
+            else if (!returnPlayer && this.moveRest === 0){
                 $(window).trigger('endTurn', [this]);
             }
         });
@@ -135,14 +135,13 @@ class Player {
 
     //////////////////////// méthodes pour la phase de combat ///////////////////////
 
-    // pb pour le changement de tour au premier contact avec l'adversaire
+    // si on alterne attaque et def, le tour ne se termine pas 
 
     playerAttack(weapons, nextPlayer){
         this.btnAttack(weapons, nextPlayer);
         this.btnDefense();
     };
 
-    // PB : lors de l'arriver d'unjoueur sur l'autre joueur, letour passe.
     btnAttack(weapons, nextPlayer){
         this.elementBtn.btnAtt.removeAttr('disabled');
         this.elementBtn.btnAtt.on('click', () => {
@@ -152,7 +151,6 @@ class Player {
             }
             this.elementP.text("Vous décidez d'attaquer l'autre joueur avec le "+ weaponOnPlayer.name +" ! vous lui infliger "+ weaponOnPlayer.damage +" dégats.");
             this.elementBtn.btnAtt.off('click');
-            this.elementBtn.btnAtt.attr('disabled', true);
             $(window).trigger('endTurn', [this]);
         });
     };
@@ -164,7 +162,6 @@ class Player {
             this.activeDefense = true; ////////////////
             this.elementP.text("Vous décidez de vous défendre! vous subirez que 50% des dégats.");
             this.elementBtn.btnDef.off('click');
-            this.elementBtn.btnDef.attr('disabled', true);
             $(window).trigger('endTurn', [this]);
         });
     }
@@ -172,13 +169,12 @@ class Player {
     //////////////////////// méthodes pour la phase de fin de tour ///////////////////////
 
     // 2 PB : des fois : - image joueur disparait ; - btn innactif lors du premier clic
-    // remarque : apparement la methode se passe dans une boucle
     btnEndTurn(){
         this.elementBtn.btnFin.removeAttr('disabled');
         this.elementBtn.btnFin.on('click', () => {
             $('.move').removeAttr('data-move').removeClass('move');
             $(window).trigger('endTurn', [this]);
-            this.elementBtn.btnFin.attr('disabled', true);
+            this.elementBtn.btnFin.off('click'); 
         });
     };
 }

@@ -21,6 +21,7 @@ class App {
         {btnFin:$('.element2 .btnFin'), btnAtt:$('.element2 .btnAtt'), btnDef:$('.element2 .btnDef')},
         $('.element2 .part3 p'), 
         {helth: $('.element2 .helth'), damage:$('.element2 .damage'), weapon: $('.element2 .weaponPlayer')});
+        this.players = [this.player1, this.player2];
 
         this.attackMode = false;
 
@@ -34,7 +35,9 @@ class App {
         this.board.generatePositionPlayer(this.player1, this.player2);
         this.board.generatePlayer([this.player1, this.player2]);
         this.board.generateWeapon([this.laser, this.pompe, this.grenade, this.assaut]);
-        // this.player1.description(this.weapons);
+        this.players.forEach((element)=> {
+            element.description(this.weapons);
+          });
     };
 
     play(){
@@ -63,6 +66,9 @@ class App {
         this.turnNumber++;
         // faire boucle foreach
         this.nextPlayer.moveRest =  this.nextPlayer.move;
+        this.currentPlayer.elementBtn.btnDef.attr('disabled', true);
+        this.currentPlayer.elementBtn.btnFin.attr('disabled', true);
+        this.currentPlayer.elementBtn.btnAtt.attr('disabled', true);
         console.log('changement joueur');
         this.play();
     }
