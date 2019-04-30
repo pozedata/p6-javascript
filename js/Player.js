@@ -1,27 +1,26 @@
 class Player {
-    constructor(name, type, weapon, elementBtn, elementP, elementDesc){
+    constructor(name, type, weapons, elementBtn, elementP, elementDesc, elementWeapon){
         this.name = name;
         this.sante = 100;
-        this.weapon = weapon[0].type;
+        this.weapon = weapons[0];
         this.oldWeapon;
         this.move = 3;
         this.moveRest = this.move;
         this.type = type;
         this.position;
         this.oldPosition;
-        this.img = "../img/"+ this.type +"-"+ this.weapon +".svg";
+        this.img = "../img/"+ this.type +"-"+ this.weapon.type +".svg";
         this.activeDefense = false;
         this.elementBtn = elementBtn;
         this.elementP = elementP;
         this.elementDesc = elementDesc;
+        this.elementWeapon = elementWeapon;
     };
 
-    description(weapons) {
-        let objWeapon = weapons.find(weapon => weapon.type === this.weapon);
-        console.log(objWeapon);
-        this.elementDesc.helth.text(100);
-        this.elementDesc.damage.text(objWeapon.damage);
-        this.elementDesc.weapon.text(objWeapon.name);
+    description() {
+        this.elementDesc.helth.text(this.sante);
+        this.elementDesc.damage.text(this.weapon.damage);
+        this.elementDesc.weapon.text(this.weapon.name);
     }
 
     //////////////////////// méthode pour la phase de déplacements ///////////////////////
@@ -55,21 +54,22 @@ class Player {
 
     playerMoveOnWeapon(e, weapons) {
         if ($(e.target).hasClass('weapon')) {
+            
             let weaponOnCase = weapons.find(elt => (elt.type === $(e.target).attr('data-weapon')));
-            $(e.target).attr('data-weapon', this.weapon);
+            $(e.target).attr('data-weapon', this.weapon.type);
             this.oldWeapon = this.weapon;
-            this.weapon = weaponOnCase.type;
-            this.img = "../img/"+ this.type +"-"+ this.weapon +".svg";
-            $(e.target).css('background-image', 'url("../img/'+ this.type +'-'+ this.weapon +'.svg")');
+            this.weapon = weaponOnCase;
+            this.img = "../img/"+ this.type +"-"+ this.weapon.type +".svg";
+            $(e.target).css('background-image', 'url("../img/'+ this.type +'-'+ this.weapon.type +'.svg")');
         }
-        // diviser
-        if (this.type === "player1"){
-            $('div[class = "element1"] div[class = "imgArme"] img').attr('src', '../img/'+ this.weapon +'.svg');
-        }
-        else{
-            $('div[class = "element2"] div[class = "imgArme"] img').attr('src', '../img/'+ this.weapon +'.svg');
-        }
+        this.weaponOnInterface();
     };
+
+    weaponOnInterface() {
+            this.elementWeapon.attr('src', '../img/'+ this.weapon.type +'.svg');
+            this.elementDesc.damage.text(this.weapon.damage);
+
+    }
 
     playerOrientation(e) {
         //condition si clique sur une cardinnalité
@@ -145,11 +145,13 @@ class Player {
     btnAttack(weapons, nextPlayer){
         this.elementBtn.btnAtt.removeAttr('disabled');
         this.elementBtn.btnAtt.on('click', () => {
-            let weaponOnPlayer = weapons.find(elt => (elt.type === this.weapon));
+            let weaponOnPlayer = weapons.find(elt => (elt.type === this.weapon.type));
             if (nextPlayer.activeDefense === true){
                 weaponOnPlayer.damage = weaponOnPlayer.damage / 2;
             }
             this.elementP.text("Vous décidez d'attaquer l'autre joueur avec le "+ weaponOnPlayer.name +" ! vous lui infliger "+ weaponOnPlayer.damage +" dégats.");
+            nextPlayer.elementDesc.helth.text(nextPlayer.sante = nextPlayer.sante - this.weapon.damage);
+            console.log(nextPlayer.sante);
             this.elementBtn.btnAtt.off('click');
             $(window).trigger('endTurn', [this]);
         });

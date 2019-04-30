@@ -16,11 +16,13 @@ class App {
         this.player1 = new Player("Joueur bleu", "player1", this.weapons,
         {btnFin:$('.element1 .btnFin'), btnAtt:$('.element1 .btnAtt'), btnDef:$('.element1 .btnDef')},
         $('.element1 .part3 p'), 
-        {helth: $('.element1 .helth'), damage: $('.element1 .damage'), weapon: $('.element1 .weaponPlayer')});
+        {helth: $('.element1 .helth'), damage: $('.element1 .damage'), weapon: $('.element1 .weaponPlayer')},
+        $('div[class = "element1"] div[class = "imgArme"] img'));
         this.player2 = new Player("Joueur rouge", "player2", this.weapons,
         {btnFin:$('.element2 .btnFin'), btnAtt:$('.element2 .btnAtt'), btnDef:$('.element2 .btnDef')},
         $('.element2 .part3 p'), 
-        {helth: $('.element2 .helth'), damage:$('.element2 .damage'), weapon: $('.element2 .weaponPlayer')});
+        {helth: $('.element2 .helth'), damage:$('.element2 .damage'), weapon: $('.element2 .weaponPlayer')},
+        $('div[class = "element2"] div[class = "imgArme"] img'));
         this.players = [this.player1, this.player2];
 
         this.attackMode = false;
@@ -59,12 +61,10 @@ class App {
             this.currentPlayer.playerAttack(this.weapons, this.nextPlayer);
             console.log(this.currentPlayer);
         }
-            
     };
 
     endTurn(){
         this.turnNumber++;
-        // faire boucle foreach
         this.nextPlayer.moveRest =  this.nextPlayer.move;
         this.currentPlayer.elementBtn.btnDef.attr('disabled', true);
         this.currentPlayer.elementBtn.btnFin.attr('disabled', true);
