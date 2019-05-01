@@ -83,6 +83,6 @@ class App {
             player.elementBtn.btnFin.attr('disabled', true);
             player.elementBtn.btnAtt.attr('disabled', true);
         });
-        // comment stopé le jeu ? 
+        // rajouté moyen de recommencer partie  
     }
 };

@@ -150,7 +150,7 @@ class Player {
                 weaponOnPlayer.damage = weaponOnPlayer.damage / 2;
             }
             this.interfaceOnAttack(nextPlayer);
-            let test = verifHelthPlayer(nextPlayer);
+            let test = this.verifHelthPlayer(nextPlayer);
             if (!test) {
                 $(window).trigger('endTurn', [this]);
             }
