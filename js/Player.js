@@ -139,10 +139,6 @@ class Player {
     // si on alterne attaque et def, le tour ne se termine pas 
 
     playerAttack(nextPlayer){
-        // let test = interfaceOnAttack(nextPlayer)
-        // if (!test) {
-            
-        // }
         this.btnAttack(nextPlayer);
         this.btnDefense();
     };
@@ -154,8 +150,14 @@ class Player {
                 weaponOnPlayer.damage = weaponOnPlayer.damage / 2;
             }
             this.interfaceOnAttack(nextPlayer);
+            let test = verifHelthPlayer(nextPlayer);
+            if (!test) {
+                $(window).trigger('endTurn', [this]);
+            }
+            else {
+                $(window).trigger('endGame', [this]);
+            }
             this.elementBtn.btnAtt.off('click');
-            $(window).trigger('endTurn', [this]);
         });
     };
 
@@ -171,15 +173,18 @@ class Player {
         else{
             nextPlayer.elementDesc.helth.css('color', 'red');
         }
-
         if(nextPlayer.sante <= 0) {
             nextPlayer.elementDesc.helth.text(nextPlayer.sante = 0);
-            $(window).trigger('endGame', [this]);
-            // return true
         }
-        // else {
-        //     return false
-        // }
+    }
+
+    verifHelthPlayer(nextPlayer){
+        if(nextPlayer.sante <= 0) {
+            return true;
+        }
+        else {
+            return false;
+        }
     }
 
     // PB : arrive pas a placer l'activeDefence au bon endroit pour qu'il se desactive pour les tour d'apres, ici present dans la app et bloque les autre btn si on l'uitilise ... 
