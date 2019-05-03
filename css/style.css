@@ -111,9 +111,7 @@ ul {
 /* ====================================== MODAL ====================================== */
 
 #info {
-    height: 30px;
-    width: 30px;
-    background-color: lightblue;
+    background-color: skyblue;
 }
 
 #close {

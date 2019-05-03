@@ -33,6 +33,11 @@ class App {
 
     };
     generateMap(){
+        this.players.forEach((player)=> {
+            player.elementBtn.btnDef.attr('disabled', true);
+            player.elementBtn.btnFin.attr('disabled', true);
+            player.elementBtn.btnAtt.attr('disabled', true);
+        });
         this.board.createMap();
         this.board.generateWall();
         this.board.generatePositionPlayer(this.player1, this.player2);
@@ -52,7 +57,6 @@ class App {
             this.currentPlayer = this.player2;
             this.nextPlayer = this.player1;
         }
-        // this.currentPlayer.activeDefense = false;
         this.currentPlayer.btnEndTurn();
         if (this.attackMode === false) {
             this.board.generateCaseForMove(this.currentPlayer);
@@ -69,7 +73,15 @@ class App {
         this.currentPlayer.elementBtn.btnDef.attr('disabled', true);
         this.currentPlayer.elementBtn.btnFin.attr('disabled', true);
         this.currentPlayer.elementBtn.btnAtt.attr('disabled', true);
-        // console.log('changement joueur');
+
+        this.currentPlayer.elementBtn.btnAtt.off('click'); 
+        this.currentPlayer.elementBtn.btnDef.off('click'); 
+        this.currentPlayer.elementBtn.btnFin.off('click'); 
+
+        this.nextPlayer.elementP.text(""); 
+        this.nextPlayer.elementP.text(""); 
+        this.nextPlayer.elementP.text(""); 
+
         this.play();
     }
 

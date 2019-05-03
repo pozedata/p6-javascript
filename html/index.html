@@ -33,9 +33,9 @@
                  <p></p>
             </div>
             <div class="part4"> 
-                <button class="btnAtt" disabled>attaquer</button> 
-                <button class="btnDef" disabled>défendre</button> 
-                <button class="btnFin" disabled>fin du tour</button>      
+                <button class="btnAtt">attaquer</button> 
+                <button class="btnDef">défendre</button> 
+                <button class="btnFin">fin du tour</button>      
             </div>
         </div>
 
@@ -65,15 +65,16 @@
                 </div>
 
                 <div class="part4">  
-                    <button class="btnAtt" disabled>attaquer</button> 
-                    <button class="btnDef" disabled>défendre</button> 
-                    <button class="btnFin" disabled>fin du tour</button>        
+                    <button class="btnAtt">attaquer</button> 
+                    <button class="btnDef">défendre</button> 
+                    <button class="btnFin">fin du tour</button>        
                 </div>
             </div>
         </div>    
-    </div>  
+    </div>
 
-    <button id="info" href="#modal1">i</button>
+    </br>
+    <button id="info" href="#modal1"><p>Règles du jeu</p></button>
     <aside id="modal1" class="modal" style="display:none;">
         <div class="modal-wrapper">
             <div id="box-modal">
@@ -131,6 +132,12 @@
             </div>
         </div>
     </aside>
+
+    <audio preload="auto" id="walk">
+        <source src="../sound/tp4.mp3" type="audio/mp3">
+        <source src="../sound/tp.ogg" type="audio/ogg">
+      </audio>
+      
 
     <script src="../js/jquery.js"></script>
     <script src="../js/Board.js"></script>

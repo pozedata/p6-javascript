@@ -50,6 +50,8 @@ class Player {
         this.position = {x:parseInt($(e.target).attr('data-row')) , y:parseInt($(e.target).attr('data-col'))};
         let eltArray = array.find(elt => (elt.attr('id') === (''+ this.oldPosition.x +'' + ''+ this.oldPosition.y +'')));
         eltArray.removeClass(this.type).addClass('empty').removeAttr('style');
+        $('#walk')[0].volume = 0.1;
+        $('#walk')[0].play();
     };
 
     playerMoveOnWeapon(e, weapons) {
@@ -146,24 +148,39 @@ class Player {
     btnAttack(nextPlayer){
         this.elementBtn.btnAtt.removeAttr('disabled');
         this.elementBtn.btnAtt.on('click', () => {
-            if (nextPlayer.activeDefense === true){
-                weaponOnPlayer.damage = weaponOnPlayer.damage / 2;
-            }
+            // if (nextPlayer.activeDefense === true){
+            //     weaponOnPlayer.damage = weaponOnPlayer.damage / 2;
+            //     nextPlayer.activeDefense = false;
+            // }
             this.interfaceOnAttack(nextPlayer);
-            let test = this.verifHelthPlayer(nextPlayer);
-            if (!test) {
+            // this.elementBtn.btnAtt.off('click');
+            let playerDie = this.verifHelthPlayer(nextPlayer);
+            if (!playerDie) {
                 $(window).trigger('endTurn', [this]);
             }
             else {
                 $(window).trigger('endGame', [this]);
             }
-            this.elementBtn.btnAtt.off('click');
         });
     };
 
     interfaceOnAttack(nextPlayer) {
-        this.elementP.text("Vous décidez d'attaquer l'autre joueur avec le "+ this.weapon.name +" ! vous lui infliger "+ this.weapon.damage +" dégats.");
-        nextPlayer.elementDesc.helth.text(nextPlayer.sante = nextPlayer.sante - this.weapon.damage);
+        
+        if (nextPlayer.activeDefense === true){
+            nextPlayer.sante = nextPlayer.sante - this.weapon.damage/2;
+            this.elementP.text("Vous décidez d'attaquer l'autre joueur avec le "+ this.weapon.name +" ! vous lui infliger "+ this.weapon.damage/2 +" dégats.");
+            nextPlayer.activeDefense = false;
+        }
+        else {
+            nextPlayer.sante = nextPlayer.sante - this.weapon.damage;
+            this.elementP.text("Vous décidez d'attaquer l'autre joueur avec le "+ this.weapon.name +" ! vous lui infliger "+ this.weapon.damage +" dégats.");
+        }
+        
+        this.updateEnemyHealthInfo(nextPlayer);
+    }
+
+    updateEnemyHealthInfo(nextPlayer){
+        nextPlayer.elementDesc.helth.text(nextPlayer.sante);
         if(nextPlayer.sante >= 60){
             nextPlayer.elementDesc.helth.css('color', 'green');
         }
@@ -193,8 +210,8 @@ class Player {
         this.elementBtn.btnDef.on('click', () => {
             this.activeDefense = true; ////////////////
             this.elementP.text("Vous décidez de vous défendre! vous subirez que 50% des dégats.");
-            $(window).trigger('endTurn', [this]);
             this.elementBtn.btnDef.off('click');
+            $(window).trigger('endTurn', [this]);
         });
     }
 
@@ -204,9 +221,15 @@ class Player {
     btnEndTurn(){
         this.elementBtn.btnFin.removeAttr('disabled');
         this.elementBtn.btnFin.on('click', () => {
-            $('.move').removeAttr('data-move').removeClass('move');
+            this.removeMovesAttributes();
+            this.moveRest = 0;
+            // this.elementBtn.btnFin.off('click'); 
             $(window).trigger('endTurn', [this]);
-            this.elementBtn.btnFin.off('click'); 
         });
     };
+    
+    removeMovesAttributes() {
+        $('.move').off('click');
+        $('.move').removeAttr('data-move').removeClass('move');
+    }
 }
