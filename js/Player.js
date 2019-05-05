@@ -31,7 +31,7 @@ class Player {
             this.playerMoveOnWeapon(e, weapons);
             this.playerOrientation(e);
             this.calculMoveRestPlayer(e);
-            const returnPlayer = this.verifOtherPlayerAround(nextPlayer);
+            const returnPlayer = this.verifOtherPlayerAround(nextPlayer, array);
             $('.move').off('click');
             $('.move').removeAttr('data-move').removeClass('move');
             if (this.moveRest !== 0) {
@@ -45,18 +45,17 @@ class Player {
     };
 
     playerMoveOnClick(e, array) {
-        $(e.target).addClass(this.type).removeClass('empty').css('background-image', 'url('+ this.img +')');
+        // $(e.target).addClass(this.type).removeClass('empty').animate({'background-image':'url('+ this.img +')'},1000);
+        $(e.target).addClass(this.type).removeClass('empty').delay(2000).css('background-image', 'url('+ this.img +')');
         this.oldPosition = this.position;
         this.position = {x:parseInt($(e.target).attr('data-row')) , y:parseInt($(e.target).attr('data-col'))};
         let eltArray = array.find(elt => (elt.attr('id') === (''+ this.oldPosition.x +'' + ''+ this.oldPosition.y +'')));
         eltArray.removeClass(this.type).addClass('empty').removeAttr('style');
-        $('#walk')[0].volume = 0.1;
-        $('#walk')[0].play();
+        $('#tp')[0].play();
     };
 
     playerMoveOnWeapon(e, weapons) {
         if ($(e.target).hasClass('weapon')) {
-            
             let weaponOnCase = weapons.find(elt => (elt.type === $(e.target).attr('data-weapon')));
             $(e.target).attr('data-weapon', this.weapon.type);
             this.oldWeapon = this.weapon;
@@ -65,6 +64,7 @@ class Player {
             $(e.target).css('background-image', 'url("../img/'+ this.type +'-'+ this.weapon.type +'.svg")');
         }
         this.weaponOnInterface();
+        
     };
 
     weaponOnInterface() {
@@ -120,7 +120,7 @@ class Player {
         }
     };
 
-    verifOtherPlayerAround(nextPlayer) {
+    verifOtherPlayerAround(nextPlayer, array) {
         if (((this.position.x+1 == nextPlayer.position.x) && (this.position.y == nextPlayer.position.y))
         || ((this.position.x-1 == nextPlayer.position.x) && (this.position.y == nextPlayer.position.y)) 
         || ((this.position.y+1 == nextPlayer.position.y) && (this.position.x == nextPlayer.position.x)) 
@@ -129,6 +129,7 @@ class Player {
             this.moveRest = 0;
             this.move = 0;
             nextPlayer.move = 0;
+            this.playerOrientationFight(nextPlayer, array);
             return true;
         }
         else {
@@ -136,9 +137,53 @@ class Player {
         }
     };
 
-    //////////////////////// méthodes pour la phase de combat ///////////////////////
+    playerOrientationFight(nextPlayer, array){
+        let eltNextPlayer = array.find(elt => (elt.attr('id') === (''+ nextPlayer.position.x +'' + ''+ nextPlayer.position.y +'')));
+        let eltPlayer = array.find(elt => (elt.attr('id') === (''+ this.position.x +'' + ''+ this.position.y +'')));
+        if ((this.position.x+1 == nextPlayer.position.x) && (this.position.y == nextPlayer.position.y)) {
+            if (this.type === "player1"){
+                eltNextPlayer.css('transform', 'rotate(0deg)');
+                eltPlayer.css('transform', 'rotate(0deg)');
+            }
+            else {
+                eltNextPlayer.css('transform', 'rotate(180deg)');
+                eltPlayer.css('transform', 'rotate(180deg)');
+            }
+        }
+        else if ((this.position.x-1 == nextPlayer.position.x) && (this.position.y == nextPlayer.position.y)) {
+            if (this.type === "player1"){
+                eltNextPlayer.css('transform', 'rotate(-180deg)');
+                eltPlayer.css('transform', 'rotate(-180deg)');
+            }
+            else {
+                eltNextPlayer.css('transform', 'rotate(0deg)');
+                eltPlayer.css('transform', 'rotate(0deg)');
+            }
+        }
+        else if ((this.position.y+1 == nextPlayer.position.y) && (this.position.x == nextPlayer.position.x)) {
+            if (this.type === "player1"){
+                eltNextPlayer.css('transform', 'rotate(-90deg)');
+                eltPlayer.css('transform', 'rotate(-90deg)');
+            }
+            else {
+                eltNextPlayer.css('transform', 'rotate(90deg)');
+                eltPlayer.css('transform', 'rotate(90deg)');
+            }
+        }
+        else {
+            if (this.type === "player1"){
+                eltNextPlayer.css('transform', 'rotate(90deg)');
+                eltPlayer.css('transform', 'rotate(90deg)');
+            }
+            else {
+                eltNextPlayer.css('transform', 'rotate(-90deg)');
+                eltPlayer.css('transform', 'rotate(-90deg)');
+            }
 
-    // si on alterne attaque et def, le tour ne se termine pas 
+        }
+    }
+
+    //////////////////////// méthodes pour la phase de combat ///////////////////////
 
     playerAttack(nextPlayer){
         this.btnAttack(nextPlayer);
@@ -148,12 +193,8 @@ class Player {
     btnAttack(nextPlayer){
         this.elementBtn.btnAtt.removeAttr('disabled');
         this.elementBtn.btnAtt.on('click', () => {
-            // if (nextPlayer.activeDefense === true){
-            //     weaponOnPlayer.damage = weaponOnPlayer.damage / 2;
-            //     nextPlayer.activeDefense = false;
-            // }
             this.interfaceOnAttack(nextPlayer);
-            // this.elementBtn.btnAtt.off('click');
+            $('#waterGun')[0].play();
             let playerDie = this.verifHelthPlayer(nextPlayer);
             if (!playerDie) {
                 $(window).trigger('endTurn', [this]);
@@ -165,17 +206,15 @@ class Player {
     };
 
     interfaceOnAttack(nextPlayer) {
-        
         if (nextPlayer.activeDefense === true){
             nextPlayer.sante = nextPlayer.sante - this.weapon.damage/2;
-            this.elementP.text("Vous décidez d'attaquer l'autre joueur avec le "+ this.weapon.name +" ! vous lui infliger "+ this.weapon.damage/2 +" dégats.");
+            this.elementP.text("Vous décidez d'attaquer l'autre joueur avec le "+ this.weapon.name +" ! vous lui infligez "+ this.weapon.damage/2 +" dégats.");
             nextPlayer.activeDefense = false;
         }
         else {
             nextPlayer.sante = nextPlayer.sante - this.weapon.damage;
-            this.elementP.text("Vous décidez d'attaquer l'autre joueur avec le "+ this.weapon.name +" ! vous lui infliger "+ this.weapon.damage +" dégats.");
+            this.elementP.text("Vous décidez d'attaquer l'autre joueur avec le "+ this.weapon.name +" ! vous lui infligez "+ this.weapon.damage +" dégats.");
         }
-        
         this.updateEnemyHealthInfo(nextPlayer);
     }
 
@@ -209,7 +248,8 @@ class Player {
         this.elementBtn.btnDef.removeAttr('disabled');
         this.elementBtn.btnDef.on('click', () => {
             this.activeDefense = true; ////////////////
-            this.elementP.text("Vous décidez de vous défendre! vous subirez que 50% des dégats.");
+            this.elementP.text("Vous décidez de vous défendre ! Vous subirez que 50% des dégats.");
+            $('#armor')[0].play();
             this.elementBtn.btnDef.off('click');
             $(window).trigger('endTurn', [this]);
         });
@@ -223,7 +263,8 @@ class Player {
         this.elementBtn.btnFin.on('click', () => {
             this.removeMovesAttributes();
             this.moveRest = 0;
-            // this.elementBtn.btnFin.off('click'); 
+            this.elementP.text("Vous avez décidé de mettre fin à votre tour !")
+            $('#end')[0].play(); 
             $(window).trigger('endTurn', [this]);
         });
     };

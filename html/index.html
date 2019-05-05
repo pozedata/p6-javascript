@@ -78,30 +78,30 @@
     <aside id="modal1" class="modal" style="display:none;">
         <div class="modal-wrapper">
             <div id="box-modal">
-                <h1>Règle du jeu</h1>
-                <p>Par un beau temps, 2 joueurs décide d'aller faire une partie de pistolet a eau dans le jardin, le but est simple, battre l'autre !</p>
+                <h1>Règles du jeu</h1>
+                <p>Part un beau temps, 2 joueurs décident d'aller faire une partie de pistolet à eau dans le jardin, le but est simple, battre l'autre !</p>
                 <h2>Le terrain de jeu</h2>
                 <p>Voici quelques spécificités du terrain</p>
                 <ul>- Le jardin est une grille de 10X10</ul>
-                <ul>- Des buisson apparaitrons et seront infranchissable</ul>
-                <ul>- Les joueurs seront placer a l'opposé l'un de l'autre</ul>
+                <ul>- Des buissons apparaîtrons et seront infranchissables</ul>
+                <ul>- Les joueurs seront placés a l'opposé l'un de l'autre</ul>
                 <ul>- Au sol, il y auras 4 armes que les joueurs pourront ramasser</ul>
-                <ul>- Il peut y avoir jusqu'a 4 type d'armes différentes</ul>
+                <ul>- Il peut y avoir jusqu'à 4 types d'armes différentes</ul>
                 
 
                 <img class="info1" src="../img/infoModal/info1.png">
 
                 <p>Sur les cotés du terrain, se trouve les interfaces joueurs : </p>
                 <ul>- La case du haut represente le joueur</ul>
-                <ul>- En dessous se trouve les caractéristiques du joueur</ul>
-                <ul>- Ensuite, la case pour l'instant vide contiendras le déroulement du jeu</ul>
-                <ul>- Et enfin les bouton liée au joueur</ul>
+                <ul>- En dessous se trouvent les caractéristiques du joueur</ul>
+                <ul>- Ensuite, la case pour l'instant vide, contiendra le déroulement du jeu</ul>
+                <ul>- Et enfin les boutons liées au joueur</ul>
 
                 <h2>Liste des armes</h2>
 
                 <p><img class="arme" src="../img/pistolet.svg">Pistolet a eau : arme de base du joueur, 10 points de dégats</p>
                 <p><img class="arme" src="../img/laser.svg">Pistolet laser : 15 points de dégats</p>
-                <p><img class="arme" src="../img/pompe.svg">Fusil a pompe : 20 points de dégats</p>
+                <p><img class="arme" src="../img/pompe.svg">Fusil à pompe : 20 points de dégats</p>
                 <p><img class="arme" src="../img/grenade.svg">Lance grenade : 25 points de dégats</p>
                 <p><img class="arme" src="../img/assaut.svg">Fusil d'assaut : 30 points de dégats</p>
 
@@ -112,12 +112,12 @@
 
                 <h3>L'étape de mouvement</h3>
                 <p>
-                    Chaque joueurs dipose de 3 point de mouvement par tour qu'il peut disposer comme il le souhaite. 
-                    Les mouvement possible sont représenter par les case vertes autour de lui. 
-                    Le joueur peut utiliser le bouton fin de tour pour termner son tour de jeu sans utiliser tous ses déplacement.
+                    Chaques joueurs diposent de 3 points de mouvement par tour qu'il peut disposer comme il le souhaite. 
+                    Les mouvements possible sont représentés par les cases vertes autour de lui. 
+                    Le joueur peut utiliser le bouton fin de tour pour terminer son tour de jeu sans utiliser tous ses déplacements.
                 </p>
-                <p>Quand un joueur ramasse une arme, il dépose l'arme précédemment equipé.</p>
-                <p>L'étape de mouvement prend fin lorsque les joueur se retrouve sur des cases adjacentes</p>
+                <p>Quand un joueur ramasse une arme, il dépose l'arme précédemment equipée.</p>
+                <p>L'étape de mouvement prend fin lorsque les joueurs se retrouvent sur des cases adjacentes</p>
 
                 <h3>L'étape de combat</h3>
                 <p>
@@ -125,18 +125,22 @@
                     Il peuvent attaquer ou se défendre.
                 </p>
                 <p>Attaquer permet d'infliger des dégats.</p>
-                <p>Se défendre permet de reduire de 50% les dégats de l'dversaire</p>
-                <p>Le jeu se termine quand un des joueur se retrouve a 0pdv</p>
+                <p>Se défendre permet de reduire de 50% les dégats de l'adversaire</p>
+                <p>Le jeu se termine quand un des joueurs se retrouve à 0 de santé</p>
 
                 <button id="close">Fermer</button>
             </div>
         </div>
     </aside>
 
-    <audio preload="auto" id="walk">
-        <source src="../sound/tp4.mp3" type="audio/mp3">
-        <source src="../sound/tp.ogg" type="audio/ogg">
-      </audio>
+    <audio preload="auto" id="tp" src="../sound/tp.mp3" type="audio/mp3"></audio>
+    <audio preload="auto" id="fight" src="../sound/fight.mp3" type="audio/mp3"></audio>
+    <audio preload="auto" id="gameOver" src="../sound/gameOver.mp3" type="audio/mp3"></audio>
+    <audio preload="auto" id="waterGun" src="../sound/waterGun.mp3" type="audio/mp3"></audio>
+    <audio preload="auto" id="armor" src="../sound/armor.mp3" type="audio/mp3"></audio>
+    <audio preload="auto" id="end" src="../sound/end.mp3" type="audio/mp3"></audio>
+        
+    
       
 
     <script src="../js/jquery.js"></script>

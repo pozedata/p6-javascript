@@ -6,7 +6,7 @@ class App {
 
         this.board = new Board('#jeu');
 
-        this.pistolet = new Weapon("pistolet a eau", 10, "pistolet");
+        this.pistolet = new Weapon("pistolet à eau", 10, "pistolet");
         this.laser = new Weapon("pistolet laser", 15, "laser");
         this.pompe = new Weapon("fusil a pompe", 20, "pompe");
         this.grenade = new Weapon("lance grenade", 25, "grenade");
@@ -28,10 +28,19 @@ class App {
         this.attackMode = false;
 
         $(window).on('endTurn', () => {this.endTurn()});
-        $(window).on('attackMode', () => {this.attackMode = true; this.play()});
+        $(window).on('attackMode', () => {this.startFight()});
         $(window).on('endGame', () => {this.endGame()});
 
     };
+
+    settingSound(){
+        $('#tp')[0].volume = 0.1;
+        $('#fight')[0].volume = 0.3;
+        $('#gameOver')[0].volume = 0.4;
+        $('#waterGun')[0].volume = 0.9;
+        $('#end')[0].volume = 0.2;
+    }
+
     generateMap(){
         this.players.forEach((player)=> {
             player.elementBtn.btnDef.attr('disabled', true);
@@ -81,20 +90,29 @@ class App {
         this.nextPlayer.elementP.text(""); 
         this.nextPlayer.elementP.text(""); 
         this.nextPlayer.elementP.text(""); 
-
         this.play();
+    }
+
+    startFight(){
+        this.attackMode = true;
+        $('#fight')[0].play();
+        this.play();
+        this.players.forEach((player)=> {
+            player.elementP.text("Le combat commence ! C'est au "+ this.currentPlayer.name +" de commencer.")
+        });
     }
 
     endGame() {
         let playerLose = this.players.find(elt => (elt.sante === 0));
         let playerWin = this.players.find(elt => (elt.sante !== 0));
         playerLose.elementP.text("Vous avez perdu :'( ");
-        playerWin.elementP.text("Vous avez gagner :D !!!!");
+        playerWin.elementP.text("Vous avez gagné :D !!!!");
         this.players.forEach((player)=> {
             player.elementBtn.btnDef.attr('disabled', true);
             player.elementBtn.btnFin.attr('disabled', true);
             player.elementBtn.btnAtt.attr('disabled', true);
         });
+        $('#gameOver')[0].play();
         // rajouté moyen de recommencer partie  
     }
 };
