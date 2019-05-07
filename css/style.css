@@ -108,10 +108,16 @@ ul {
     font-size: 85%;
 }
 
+#playAgain {
+    background-color: skyblue;
+    border-radius: 10%;
+}
+
 /* ====================================== MODAL ====================================== */
 
 #info {
     background-color: skyblue;
+    border-radius: 10%;
 }
 
 #close {

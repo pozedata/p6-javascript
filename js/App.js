@@ -34,10 +34,10 @@ class App {
     };
 
     settingSound(){
-        $('#tp')[0].volume = 0.1;
-        $('#fight')[0].volume = 0.3;
-        $('#gameOver')[0].volume = 0.4;
-        $('#waterGun')[0].volume = 0.9;
+        $('#tp')[0].volume = 0.07;
+        $('#fight')[0].volume = 0.2;
+        $('#gameOver')[0].volume = 0.2;
+        $('#waterGun')[0].volume = 1;
         $('#end')[0].volume = 0.2;
     }
 
