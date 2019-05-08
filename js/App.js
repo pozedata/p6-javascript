@@ -11,6 +11,7 @@ class App {
         this.pompe = new Weapon("fusil a pompe", 20, "pompe");
         this.grenade = new Weapon("lance grenade", 25, "grenade");
         this.assaut = new Weapon("fusil d'assaut", 30, "assaut");
+        
         this.weapons = [this.pistolet, this.laser, this.pompe, this.grenade, this.assaut];
 
         this.player1 = new Player("Joueur bleu", "player1", this.weapons,
@@ -23,6 +24,7 @@ class App {
         $('.element2 .part3 p'), 
         {helth: $('.element2 .helth'), damage:$('.element2 .damage'), weapon: $('.element2 .weaponPlayer')},
         $('div[class = "element2"] div[class = "imgArme"] img'));
+        
         this.players = [this.player1, this.player2];
 
         this.attackMode = false;
@@ -32,14 +34,6 @@ class App {
         $(window).on('endGame', () => {this.endGame()});
 
     };
-
-    settingSound(){
-        $('#tp')[0].volume = 0.07;
-        $('#fight')[0].volume = 0.2;
-        $('#gameOver')[0].volume = 0.2;
-        $('#waterGun')[0].volume = 1;
-        $('#end')[0].volume = 0.2;
-    }
 
     generateMap(){
         this.players.forEach((player)=> {
@@ -57,7 +51,7 @@ class App {
           });
     };
 
-    play(){
+    whoPlayerPlay(){
         if (this.turnNumber % 2 === 1){
             this.currentPlayer = this.player1;
             this.nextPlayer = this.player2;
@@ -66,6 +60,10 @@ class App {
             this.currentPlayer = this.player2;
             this.nextPlayer = this.player1;
         }
+    }
+
+    play(){
+        this.whoPlayerPlay();
         this.currentPlayer.btnEndTurn();
         if (this.attackMode === false) {
             this.board.generateCaseForMove(this.currentPlayer);
@@ -113,6 +111,13 @@ class App {
             player.elementBtn.btnAtt.attr('disabled', true);
         });
         $('#gameOver')[0].play();
-        // rajouté moyen de recommencer partie  
+    }
+
+    settingSound(){
+        $('#tp')[0].volume = 0.07;
+        $('#fight')[0].volume = 0.2;
+        $('#gameOver')[0].volume = 0.2;
+        $('#waterGun')[0].volume = 1;
+        $('#end')[0].volume = 0.2;
     }
 };

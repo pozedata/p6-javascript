@@ -32,8 +32,7 @@ class Player {
             this.playerOrientation(e);
             this.calculMoveRestPlayer(e);
             const returnPlayer = this.verifOtherPlayerAround(nextPlayer, array);
-            $('.move').off('click');
-            $('.move').removeAttr('data-move').removeClass('move');
+            this.removeMovesAttributes();
             if (this.moveRest !== 0) {
                 board.generateCaseForMove(this);
                 this.playerMove(array, weapons, board, nextPlayer);
@@ -64,7 +63,6 @@ class Player {
             $(e.target).css('background-image', 'url("../img/'+ this.type +'-'+ this.weapon.type +'.svg")');
         }
         this.weaponOnInterface();
-        
     };
 
     weaponOnInterface() {
@@ -179,7 +177,6 @@ class Player {
                 eltNextPlayer.css('transform', 'rotate(-90deg)');
                 eltPlayer.css('transform', 'rotate(-90deg)');
             }
-
         }
     }
 
@@ -229,6 +226,7 @@ class Player {
         else{
             nextPlayer.elementDesc.helth.css('color', 'red');
         }
+
         if(nextPlayer.sante <= 0) {
             nextPlayer.elementDesc.helth.text(nextPlayer.sante = 0);
         }
@@ -243,21 +241,18 @@ class Player {
         }
     }
 
-    // PB : arrive pas a placer l'activeDefence au bon endroit pour qu'il se desactive pour les tour d'apres, ici present dans la app et bloque les autre btn si on l'uitilise ... 
     btnDefense() {
         this.elementBtn.btnDef.removeAttr('disabled');
         this.elementBtn.btnDef.on('click', () => {
-            this.activeDefense = true; ////////////////
+            this.activeDefense = true;
             this.elementP.text("Vous décidez de vous défendre ! Vous subirez que 50% des dégats.");
             $('#armor')[0].play();
-            this.elementBtn.btnDef.off('click');
             $(window).trigger('endTurn', [this]);
         });
     }
 
     //////////////////////// méthodes pour la phase de fin de tour ///////////////////////
 
-    // 2 PB : des fois : - image joueur disparait ; - btn innactif lors du premier clic
     btnEndTurn(){
         this.elementBtn.btnFin.removeAttr('disabled');
         this.elementBtn.btnFin.on('click', () => {

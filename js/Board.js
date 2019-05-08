@@ -12,7 +12,7 @@ class Board {
     // méthode qui génère la map
     createMap() {
         for (let row = 0; row < this.row; row++) {
-            const divRow = $('<div>').addClass('row').attr('id', row); // a peut etre elever
+            const divRow = $('<div>').addClass('row').attr('id', row); 
             $(this.mapId).append(divRow);
             for (let col = 0;col < this.colum; col++) {
                 const divCol = $('<div>').addClass('case empty').attr("data-row", row).attr("data-col", col).attr('id', (row).toString() + (col).toString());
@@ -45,6 +45,7 @@ class Board {
         }
     };
 
+    // méthode pour la génération des positions joueurs
     generatePositionPlayer(player1,player2) {
         let playerRandom = this.caseGrid[Math.floor(Math.random() * this.caseGrid.length/2)];
         let playerRandomOpp = this.caseGrid[(this.caseGrid.length-1)-this.caseGrid.indexOf(playerRandom)];
@@ -57,6 +58,7 @@ class Board {
         }
     }
 
+    // méthode pour la génération des joueurs
     generatePlayer(players) {
         players.forEach(char => {
             $('#'+ char.position.x +''+ char.position.y +'').addClass(char.type).removeClass('empty').css('background-image', 'url('+ char.img +')');
@@ -72,7 +74,6 @@ class Board {
             if (weaponRandom.hasClass('empty')) {
                 weaponRandom.attr('class', 'case weapon');
                 weaponRandom.attr('data-weapon', weapons[random].type);
-                // weaponRandom.attr('data-num-weapon', random); // peut etre a enlever 
             }
             else {
                 i--;
@@ -81,6 +82,7 @@ class Board {
         this.weapons = [... weapons];
     };
 
+    // méthode pour la génération des case de mouvement
     generateCaseForMove(player) {
         //mouvement est
         for(let i = 1; i <= player.moveRest; i++){
