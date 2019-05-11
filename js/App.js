@@ -68,13 +68,14 @@ class App {
 
     play(){
         this.whoPlayerPlay();
-        this.currentPlayer.btnEndTurn();
         if (this.attackMode === false) {
+            this.currentPlayer.btnEndTurn();
             this.board.generateCaseForMove(this.currentPlayer);
             this.currentPlayer.playerMove(this.board.caseGrid, this.weapons, this.board, this.nextPlayer);
         }
         else {
             setTimeout(() => {
+                this.currentPlayer.btnEndTurn();
                 this.currentPlayer.playerAttack(this.nextPlayer);
             }, 1200);
         }
