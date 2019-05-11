@@ -34,8 +34,10 @@ class Player {
             const returnPlayer = this.verifOtherPlayerAround(nextPlayer, array);
             this.removeMovesAttributes();
             if (this.moveRest !== 0) {
-                board.generateCaseForMove(this);
-                this.playerMove(array, weapons, board, nextPlayer);
+                setTimeout(() => {
+                    board.generateCaseForMove(this);
+                    this.playerMove(array, weapons, board, nextPlayer);
+                }, 600);           
             }
             else if (!returnPlayer && this.moveRest === 0){
                 $(window).trigger('endTurn', [this]);

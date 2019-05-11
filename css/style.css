@@ -23,7 +23,6 @@ p {
     background-image: url("../img/test.svg");
     background-size: cover;
     border-radius: 20px; 
-    box-shadow: inset 8px 8px 2px 1px rgba(255, 255, 255, 0.4);
 }
 
 .part1, .part2, .part3, .part4 {
@@ -41,6 +40,18 @@ p {
 .part2 {
     display : flex;
     justify-content: space-between;
+}
+
+.element1 {
+    border-width:10px;
+    border-style:solid;
+    border-color:rgba(0, 0, 250, 1);
+}
+
+.element2 {
+    border-width:10px;
+    border-style:solid;
+    border-color:rgba(250, 0, 0, 1);
 }
 
 .element2 .part1 img { 

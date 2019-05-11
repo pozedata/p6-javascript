@@ -55,10 +55,14 @@ class App {
         if (this.turnNumber % 2 === 1){
             this.currentPlayer = this.player1;
             this.nextPlayer = this.player2;
+            $('.element1').css('border-color', 'rgba(0, 0, 250, 1)');
+            $('.element2').css('border-color', 'rgba(250, 0, 0, 0)');
         }
         else {
             this.currentPlayer = this.player2;
             this.nextPlayer = this.player1;
+            $('.element1').css('border-color', 'rgba(0, 0, 250, 0)');
+            $('.element2').css('border-color', 'rgba(250, 0, 0, 1)');
         }
     }
 
@@ -70,7 +74,9 @@ class App {
             this.currentPlayer.playerMove(this.board.caseGrid, this.weapons, this.board, this.nextPlayer);
         }
         else {
-            this.currentPlayer.playerAttack(this.nextPlayer);
+            setTimeout(() => {
+                this.currentPlayer.playerAttack(this.nextPlayer);
+            }, 1200);
         }
     };
 
@@ -110,7 +116,10 @@ class App {
             player.elementBtn.btnFin.attr('disabled', true);
             player.elementBtn.btnAtt.attr('disabled', true);
         });
-        $('#gameOver')[0].play();
+        setTimeout( () => {
+            $('#gameOver')[0].play();
+        }, 1000);
+        
     }
 
     settingSound(){
