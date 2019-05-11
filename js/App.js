@@ -69,9 +69,11 @@ class App {
     play(){
         this.whoPlayerPlay();
         if (this.attackMode === false) {
-            this.currentPlayer.btnEndTurn();
-            this.board.generateCaseForMove(this.currentPlayer);
-            this.currentPlayer.playerMove(this.board.caseGrid, this.weapons, this.board, this.nextPlayer);
+            setTimeout(() => {
+                this.currentPlayer.btnEndTurn();
+                this.board.generateCaseForMove(this.currentPlayer);
+                this.currentPlayer.playerMove(this.board.caseGrid, this.weapons, this.board, this.nextPlayer);
+            }, 600); 
         }
         else {
             setTimeout(() => {

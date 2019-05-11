@@ -37,7 +37,7 @@ class Player {
                 setTimeout(() => {
                     board.generateCaseForMove(this);
                     this.playerMove(array, weapons, board, nextPlayer);
-                }, 600);           
+                }, 600);        
             }
             else if (!returnPlayer && this.moveRest === 0){
                 $(window).trigger('endTurn', [this]);
