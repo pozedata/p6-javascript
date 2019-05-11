@@ -44,7 +44,6 @@ class Player {
     };
 
     playerMoveOnClick(e, array) {
-        // $(e.target).addClass(this.type).removeClass('empty').animate({'background-image':'url('+ this.img +')'},1000);
         $(e.target).addClass(this.type).removeClass('empty').delay(2000).css('background-image', 'url('+ this.img +')');
         this.oldPosition = this.position;
         this.position = {x:parseInt($(e.target).attr('data-row')) , y:parseInt($(e.target).attr('data-col'))};
@@ -123,6 +122,7 @@ class Player {
         || ((this.position.x-1 == nextPlayer.position.x) && (this.position.y == nextPlayer.position.y)) 
         || ((this.position.y+1 == nextPlayer.position.y) && (this.position.x == nextPlayer.position.x)) 
         || ((this.position.y-1 == nextPlayer.position.y) && (this.position.x == nextPlayer.position.x)))  {
+            this.elementBtn.btnFin.off('click'); 
             $(window).trigger('attackMode', [this]);
             this.moveRest = 0;
             this.move = 0;
