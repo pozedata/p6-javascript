@@ -46,7 +46,7 @@ class Player {
     };
 
     playerMoveOnClick(e, array) {
-        $(e.target).addClass(this.type).removeClass('empty').delay(2000).css('background-image', 'url('+ this.img +')');
+        $(e.target).addClass(this.type).removeClass('empty').css('background-image', 'url('+ this.img +')');
         this.oldPosition = this.position;
         this.position = {x:parseInt($(e.target).attr('data-row')) , y:parseInt($(e.target).attr('data-col'))};
         let eltArray = array.find(elt => (elt.attr('id') === (''+ this.oldPosition.x +'' + ''+ this.oldPosition.y +'')));
